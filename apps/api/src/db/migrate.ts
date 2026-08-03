@@ -53,7 +53,7 @@ async function runMigrations(): Promise<void> {
   }
 }
 
-runMigrations().catch((err) => {
-  logger.error('Migration failed', { error: err });
+runMigrations().catch((err: unknown) => {
+  logger.error('Migration failed', { error: err instanceof Error ? err.message : String(err) });
   process.exit(1);
 });
