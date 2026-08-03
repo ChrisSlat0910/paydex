@@ -18,7 +18,7 @@ interface MidtransPayload {
 export class MidtransAdapter implements IGateway {
   validateSignature(
     _rawBody: Buffer,
-    headers: Record<string, string | string[] | undefined>,
+    _headers: Record<string, string | string[] | undefined>,
     secret: string,
   ): boolean {
     const payload = JSON.parse(_rawBody.toString('utf-8')) as MidtransPayload;
