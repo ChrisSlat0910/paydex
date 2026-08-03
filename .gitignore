@@ -46,3 +46,7 @@ redis-data/
 
 # Misc
 *.zip
+
+# IDE settings
+.vscode/launch.json
+.vscode/tasks.json
