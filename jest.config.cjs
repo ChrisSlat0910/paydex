@@ -1,6 +1,6 @@
 /** @type {import('jest').Config} */
 module.exports = {
-  projects: ['<rootDir>/apps/api/jest.config.js'],
+  projects: ['<rootDir>/apps/api/jest.config.cjs'],
   collectCoverageFrom: [
     'apps/api/src/**/*.ts',
     '!apps/api/src/**/*.d.ts',
