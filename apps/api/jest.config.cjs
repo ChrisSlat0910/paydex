@@ -5,6 +5,8 @@ module.exports = {
   testEnvironment: 'node',
   rootDir: '.',
   testMatch: ['<rootDir>/src/**/*.test.ts'],
+  globalSetup: '<rootDir>/jest.global-setup.ts',
+  setupFiles: ['<rootDir>/jest.setup.ts'],
   moduleNameMapper: {
     '^@paydex/shared$': '<rootDir>/../../packages/shared/src',
     '^@paydex/shared/(.*)$': '<rootDir>/../../packages/shared/src/$1',
@@ -19,5 +21,6 @@ module.exports = {
     '!src/db/migrations/**',
     '!src/server.ts',
     '!src/types/**',
+    '!src/**/*.test.ts',
   ],
 };

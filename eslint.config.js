@@ -11,7 +11,7 @@ export default defineConfig([
       '**/coverage/**',
       '**/.next/**',
       '**/*.config.js',
-      '**/jest.config.js',
+      '**/jest.config.cjs',
       '**/postcss.config.js',
     ],
   },
@@ -51,6 +51,7 @@ export default defineConfig([
       '@typescript-eslint/no-unsafe-call': 'off',
       '@typescript-eslint/no-unsafe-argument': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/unbound-method': 'off',
     },
   },
 ]);
