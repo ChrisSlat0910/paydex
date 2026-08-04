@@ -1,8 +1,10 @@
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
+import swaggerUi from 'swagger-ui-express';
 
 import { env } from './config/env';
+import { swaggerSpec } from './config/swagger';
 import { correlationIdMiddleware } from './middleware/correlation-id.middleware';
 import { errorMiddleware, notFoundMiddleware } from './middleware/error.middleware';
 import { requestLoggerMiddleware } from './middleware/request-logger.middleware';
@@ -29,10 +31,9 @@ app.use(
 app.use(correlationIdMiddleware);
 app.use(requestLoggerMiddleware);
 
-// Health check — no auth, no rate limiting
 app.use('/health', healthRouter);
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// Raw body needed for HMAC signature validation on webhook routes
 app.use('/api/v1/webhook', express.raw({ type: 'application/json' }), webhooksRouter);
 
 app.use(express.json());
