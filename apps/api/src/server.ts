@@ -4,10 +4,12 @@ import { logger } from './config/logger';
 import { env } from './config/env';
 import { app } from './app';
 import { initWebSocketServer } from './websocket/ws.server';
+import { startDeliveryWorker } from './modules/delivery/delivery.worker';
 
 const server = createServer(app);
 
 initWebSocketServer(server);
+startDeliveryWorker();
 
 server.listen(env.PORT, () => {
   logger.info('Paydex API server started', {
