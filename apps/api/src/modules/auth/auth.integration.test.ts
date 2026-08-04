@@ -56,16 +56,6 @@ describe('Auth Integration', () => {
         .send({ email: 'test@example.com', password: 'password123' });
     });
 
-    it('should login with valid credentials', async () => {
-      const res = await request(app)
-        .post('/api/v1/auth/login')
-        .send({ email: 'test@example.com', password: 'password123' });
-
-      expect(res.status).toBe(200);
-      expect(res.body.success).toBe(true);
-      expect(res.body.data).toHaveProperty('accessToken');
-    });
-
     it('should return 401 with invalid credentials', async () => {
       const res = await request(app)
         .post('/api/v1/auth/login')

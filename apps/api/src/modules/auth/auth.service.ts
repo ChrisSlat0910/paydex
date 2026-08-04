@@ -92,6 +92,8 @@ export async function login(email: string, password: string): Promise<TokenPair>
   const tokenHash = hashToken(refreshToken);
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
+  await query('DELETE FROM refresh_tokens WHERE user_id = $1', [user.id]);
+
   await query(
     'INSERT INTO refresh_tokens (id, user_id, token_hash, expires_at) VALUES ($1, $2, $3, $4)',
     [uuidv4(), user.id, tokenHash, expiresAt],
