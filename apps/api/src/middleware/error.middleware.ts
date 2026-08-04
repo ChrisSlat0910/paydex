@@ -31,6 +31,16 @@ export function errorMiddleware(
     return;
   }
 
+  if (err instanceof SyntaxError && 'body' in err) {
+    res.status(400).json({
+      success: false,
+      data: null,
+      error: { code: 'INVALID_JSON', message: 'Invalid JSON in request body' },
+      meta: null,
+    });
+    return;
+  }
+
   logger.error('Unhandled error', {
     correlationId,
     error: err instanceof Error ? err.message : String(err),
