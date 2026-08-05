@@ -24,6 +24,17 @@ Paydex is a Payment Event Gateway & Audit Platform — a reliability layer that 
 | Auth          | JWT + bcryptjs                   | 15min access token, 7d refresh token, bcrypt cost 12                |
 | Styling       | Tailwind CSS                     | Utility-first, dark mode                                            |
 
+## Development Status
+
+| Phase                              | Status         | Issues                                                  |
+| ---------------------------------- | -------------- | ------------------------------------------------------- |
+| Phase 1 — Planning & Documentation | ✅ Complete    | PRD, System Design, ERD, API Contract, 44 GitHub Issues |
+| Phase 2 — Project Setup            | ✅ Complete    | Monorepo, CI/CD, Docker, ESLint, TypeScript             |
+| Phase 3 — Backend                  | ✅ Complete    | All 20 backend issues closed                            |
+| Phase 3 — Frontend                 | 🔄 In Progress | Issues #31–#37                                          |
+| Phase 4 — DevOps                   | ⏳ Pending     | Issues #38–#42                                          |
+| Phase 5 — Docs & Seed              | ⏳ Pending     | Issues #43–#44                                          |
+
 ## What This Project Demonstrates
 
 **Distributed systems patterns**
@@ -45,15 +56,17 @@ Paydex is a Payment Event Gateway & Audit Platform — a reliability layer that 
 - Cursor-based pagination — no OFFSET, scales with dataset size.
 - Sliding window rate limiting via Redis ZSET pipeline — eliminates boundary burst vulnerability of fixed-window counters.
 - Machine-readable error codes on all error responses.
+- Swagger UI at `/api/docs` — interactive documentation, no auth required.
 
 **Engineering practices**
 
 - Monorepo with npm workspaces — shared TypeScript types across api and web packages.
-- GitHub Actions CI pipeline — lint, type-check, test, build on every PR.
+- GitHub Actions CI pipeline with PostgreSQL and Redis services — lint, type-check, test, build on every PR.
 - Conventional Commits + GitHub Flow — clean, traceable history.
-- 70%+ test coverage on service and controller layers.
+- Unit tests (Jest + mocks) and integration tests (Supertest + real DB/Redis).
+- 17 tests passing across 5 test suites.
 
-## System Performance
+## System Performance Targets
 
 | Metric                        | Target                               |
 | ----------------------------- | ------------------------------------ |
@@ -64,6 +77,8 @@ Paydex is a Payment Event Gateway & Audit Platform — a reliability layer that 
 | CI/CD pipeline duration       | < 5 minutes                          |
 | Test coverage                 | ≥ 70% on service + controller layers |
 
+_Measured numbers will be added after Phase 4 deployment with k6 load tests._
+
 ## Project Structure
 
 ```text
@@ -71,18 +86,19 @@ paydex/
 ├── apps/
 │   ├── api/src/
 │   │   ├── adapters/       IGateway, MidtransAdapter, AdapterFactory
-│   │   ├── config/         env.ts (Zod), logger.ts
+│   │   ├── config/         env.ts (Zod), logger.ts, swagger.ts
 │   │   ├── db/             pool.ts, migrate.ts, migrations/
 │   │   ├── middleware/     correlation-id, error, auth, rbac, rate-limit, idempotency
-│   │   ├── modules/        auth, api-keys, gateways, endpoints, webhooks, events, delivery, audit
+│   │   ├── modules/        auth, api-keys, gateways, endpoints, webhooks, events, delivery, audit, health
 │   │   ├── queue/          bullmq.config.ts, job-types.ts
 │   │   ├── websocket/      ws.server.ts
 │   │   ├── app.ts
 │   │   └── server.ts
 │   └── web/src/app/        Next.js 16 App Router pages
 ├── packages/shared/src/    Shared TypeScript types
+├── docs/                   Architecture diagrams, sequence diagrams, ERD
 ├── docs/adr/               Architecture Decision Records
-├── nginx/                  Nginx config
+├── nginx/                  Nginx reverse proxy config
 └── docker-compose.yml
 ```
 
